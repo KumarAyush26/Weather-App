@@ -1,11 +1,226 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Weather APP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Weather APP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a id="Home-tab" class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a id="About-tab" class="nav-link" href="#">About this App</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Enter a city name in the search bar and click "Search" to view real-time weather updates for that location.</a></li>
+            <li><a class="dropdown-item" href="#">View detailed weather for your selected city, including temperature, humidity, cloud info, and wind speed at the top of the page.</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Navigate to the About or Usage Guide pages for more information and support.</a></li>
+          </ul>
+          
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Usage Guide</a>
+        </li>
+        <li class="nav-item d-flex align-items-center ms-2">
+          <button id="theme-toggle" class="btn btn-outline-secondary btn-sm" title="Toggle dark/light mode" style="display: flex; align-items: center;">
+            <span id="theme-icon" class="me-1">🌙</span>
+            <span id="theme-label">Dark</span>
+          </button>
+        </li>
+      </ul>
+      
+      <form class="d-flex" role="search">
+        <input id="city" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <button id="submit" class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div id ="content" class="container">
+  <h1 class="my-4 text-center">Weather For <span id="cityName"></span></h1>
+  <main>
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">Temperatures</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">
+            <span id="temp2"></span><small class="text-body-secondary fw-light"><span>&#8457;</span><span>&#8451;</span></small>
+          </h1>
+          <ul class="list-unstyled mt-3 mb-4">
+          
+            <li>Temperature is <span id="temp"></span></li> 
+            <li>Feels like <span id="feelslike"></span></li>
+            <li>Humidity is <span id="humidity"></span></li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">Cloud-Info</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">
+            <span id="conditions2"></span><small class="text-body-secondary fw-light"></small>
+          </h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Conditions is <span id="conditions"></span></li>
+            <li>Sunset at <span id="sunset"></span></li>
+            <li>Sunrise at <span id="sunrise"></span></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+          <h4 class="my-0 fw-normal">Wind-Info</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">
+            <span id="windspeed2"></span><small class="text-body-secondary fw-light">mp/h</small>
+          </h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Clouds <span id="cloudcover"></span></li>
+            <li>Visibility is <span id="visibility"></span></li>
+            <li>Wind speed is <span id="windspeed"></span></li> 
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="display-6 text-center mb-4">Weather of other common cities</h2>
+
+  <div class="table-responsive">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th style="width: 34%;"></th>
+          <th style="width: 22%;">Conditions</th>
+          <th style="width: 22%;">Feels_like</th>
+          <th style="width: 22%;">Humidity</th>
+          <th style="width: 22%;">Sunrise</th>
+          <th style="width: 22%;">Sunset</th>
+          <th style="width: 22%;">Temp</th>
+          <th style="width: 22%;">Wind_speed</th>
+          <th style="width: 22%;">Visbility</th>
+          <th style="width: 22%;">Cloud_Cover</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" class="text-start">Mumbai</th>
+          <td id="conditions3"></td>
+          <td id="feelslike3"></td>
+          <td id="humidity3"></td>
+          <td id="sunrise3"></td>
+          <td id="sunset3"></td>
+          <td id="temp3"></td>
+          <td id="windspeed3"></td>
+          <td id="visibility3"></td>
+          <td id="cloudcover3"></td>
+          
+        </tr>
+        <tr>
+          <th scope="row" class="text-start">Kolkata</th>
+          <td id="conditions4"></td>
+          <td id="feelslike4"></td>
+          <td id="humidity4"></td>
+          <td id="sunrise4"></td>
+          <td id="sunset4"></td>
+          <td id="temp4"></td>
+          <td id="windspeed4"></td>
+          <td id="visibility4"></td>
+          <td id="cloudcover4"></td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start">Lucknow</th>
+          <td id="conditions5"></td>
+          <td id="feelslike5"></td>
+          <td id="humidity5"></td>
+          <td id="sunrise5"></td>
+          <td id="sunset5"></td>
+          <td id="temp5"></td>
+          <td id="windspeed5"></td>
+          <td id="visibility5"></td>
+          <td id="cloudcover5"></td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start">Jammu</th>
+          <td id="conditions6"></td>
+          <td id="feelslike6"></td>
+          <td id="humidity6"></td>
+          <td id="sunrise6"></td>
+          <td id="sunset6"></td>
+          <td id="temp6"></td>
+          <td id="windspeed6"></td>
+          <td id="visibility6"></td>
+          <td id="cloudcover6"></td>
+        </tr>
+        
+       
+      </tbody>
+    </table>
+  </div>
+</main>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script>
+      // Theme toggle logic
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const themeLabel = document.getElementById('theme-label');
+      function setTheme(mode) {
+        if (mode === 'dark') {
+          document.body.classList.add('bg-dark', 'text-light');
+          document.body.classList.remove('bg-light', 'text-dark');
+          themeIcon.textContent = '🌙';
+          themeLabel.textContent = 'Dark';
+        } else {
+          document.body.classList.remove('bg-dark', 'text-light');
+          document.body.classList.add('bg-light', 'text-dark');
+          themeIcon.textContent = '☀️';
+          themeLabel.textContent = 'Light';
+        }
+        localStorage.setItem('theme', mode);
+      }
+      // Initial theme
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      setTheme(savedTheme);
+      themeToggle.addEventListener('click', () => {
+        const current = localStorage.getItem('theme') || 'light';
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    </script>
+    <script src="index.js"></script>
+  </body>
 </html>
