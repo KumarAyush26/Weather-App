@@ -59,6 +59,23 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      <h2 class="display-6 text-center mb-4" id="forecast-title">Next Days Forecast</h2>
+      <div class="table-responsive mb-4">
+        <table class="table text-center" id="forecast-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Max Temp (°C)</th>
+              <th>Min Temp (°C)</th>
+              <th>Avg Temp (°C)</th>
+              <th>Conditions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Forecast rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
       <h2 class="display-6 text-center mb-4">Weather of other common cities</h2>
       <div class="table-responsive">
         <table class="table text-center">
@@ -216,6 +233,21 @@ export default function HomePage() {
         windspeed2.innerHTML = response.currentConditions.windspeed;
         visibility.innerHTML = response.currentConditions.visibility;
         cloudcover.innerHTML = response.currentConditions.cloudcover;
+        // Render forecast for next days
+        const forecastTable = document.getElementById('forecast-table').getElementsByTagName('tbody')[0];
+        forecastTable.innerHTML = '';
+        if (response.days && Array.isArray(response.days)) {
+          // Show up to 7 days forecast (excluding today)
+          for (let i = 1; i <= 7 && i < response.days.length; i++) {
+            const day = response.days[i];
+            const date = day.datetime;
+            const tempmax = ((day.tempmax - 32) * 5 / 9).toFixed(1);
+            const tempmin = ((day.tempmin - 32) * 5 / 9).toFixed(1);
+            const tempavg = ((day.temp - 32) * 5 / 9).toFixed(1);
+            const cond = day.conditions || '';
+            forecastTable.innerHTML += `<tr><td>${date}</td><td>${tempmax}</td><td>${tempmin}</td><td>${tempavg}</td><td>${cond}</td></tr>`;
+          }
+        }
         console.log(response);
       })
       .catch(err => console.error('Error fetching weather data:', err));
@@ -296,7 +328,3 @@ export default function HomePage() {
     .catch(err => console.error('Error fetching weather data:', err));
 
 }
-
-
-
-
