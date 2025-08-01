@@ -77,7 +77,7 @@ export default function HomePage() {
         </table>
       </div>
       <h2 class="display-6 text-center mb-4">Weather of other common cities</h2>
-      <div class="table-responsive">
+      <div class="table-responsive mb-4">
         <table class="table text-center">
           <thead>
             <tr>
@@ -217,10 +217,16 @@ export default function HomePage() {
   };
 
   const getWeather = (city) => {
-    cityName.innerHTML = city;
+    // We'll set cityName after getting the API response
     fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=us&key=AQA3L28SMMW2RUK7DS6JJ87N3&contentType=json`, options)
       .then(response => response.json())
       .then(response => {
+        // Use the resolved city name from the API response if available
+        if (response.resolvedAddress) {
+          cityName.innerHTML = response.resolvedAddress;
+        } else {
+          cityName.innerHTML = city;
+        }
         conditions.innerHTML = response.currentConditions.conditions;
         conditions2.innerHTML = response.currentConditions.conditions;
         feelslike.innerHTML = ((response.currentConditions.feelslike - 32) * 5 / 9).toFixed(1) + " ℃";
